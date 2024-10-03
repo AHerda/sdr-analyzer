@@ -6,17 +6,11 @@ project(sdr-sniffer VERSION 0.1.0) # Set the project name and version
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Add the include directories
-# include_directories(src include ${libairspy_include_dir})
+# Find the required packages
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBUSB REQUIRED libusb-1.0)
 
-# find_path(
-#     libairspy_include_dir
-#     NAMES libairspy/airspy.h
-#     PATHS
-#         /usr/local/include
-#         /usr/include
-# )
-
+# Find the libaispy library
 find_library(
     libairspy_location
     NAMES libairspy.a
@@ -25,18 +19,13 @@ find_library(
         /usr/lib
 )
 
+# Print the location of the libairspy library
 message(STATUS "libairspy location: ${libairspy_location}")
-# message(STATUS "libairspy include dir: ${libairspy_include_dir}")
 
-# include_directories(${libairspy_INCLUDE_DIRS})
-# link_directories(${libairspy_LIBRARIES})
-
+# Include the libraries
 add_library(airspy STATIC IMPORTED)
 set_target_properties(airspy PROPERTIES IMPORTED_LOCATION ${libairspy_location})
 
-# Link libraries if needed
-# target_link_libraries(sdr-sniffer <library_name>)
-# target_link_libraries(sdr-sniffer-tests <library_name>)
 
 # Add the executable for the main application
 file(GLOB_RECURSE SOURCES src/*.cpp)
@@ -47,5 +36,5 @@ add_executable(sdr-sniffer ${SOURCES})
 # add_executable(sdr-sniffer-tests ${TEST_SOURCES})
 
 # Link the libairspy library
-target_link_libraries(sdr-sniffer airspy)
+target_link_libraries(sdr-sniffer airspy usb-1.0)
 # target_link_libraries(sdr-sniffer-tests airspy)
