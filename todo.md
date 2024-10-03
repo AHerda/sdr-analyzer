@@ -20,10 +20,7 @@
 6. Wysłanie kilku wpisów z dokładnym czasem datą i lokalizacją
 7. Przygotowanie funkcji pod wysyłanie wpisów
 8. Przygotowanie funkcji pod odczytywanie wpisów
-<<<<<<< HEAD
 9. Zaimplementowanie funkcji podliczających statystyki
-=======
->>>>>>> 8427191 (TODO list)
 
 ## Mapy
 1. Znalezienie co może tworzyć histogram na mapie
