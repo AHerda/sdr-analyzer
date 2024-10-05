@@ -1,15 +1,16 @@
 # TODO List
 
 ## SDR
-1. Otworzynie połączenia z donglem
-2. Odebranie jakichś dane
-    * wypisanie jakichś dane
-3. Zaimplementowanie ustawiania słuchanej częstotliwości (i innych parametrów)
-4. Słuchanie i wypisywanie pasma 433MHz
-5. Znajdoiwanie konkretnych sygnałów
-6. Przeczytanie sygnałów
-7. Jak pobrać lokalizacje
-8. Pobieranie daty czasu (co do sek) oraz lokalizacji
+1. ~~Otworzynie połączenia z donglem~~
+2. Zaimplementowanie ustawiania słuchanej częstotliwości (i innych parametrów)
+3. Otwarcie nasłuchiwania
+4. Odebranie jakichś danych
+    * wypisanie jakichś danych
+5. Słuchanie i wypisywanie pasma 433MHz
+6. Znajdowanie konkretnych sygnałów
+7. Przeczytanie sygnałów
+8. Jak pobrać lokalizacje
+9. Pobieranie daty czasu (co do sek) oraz lokalizacji
 
 ## Baza Danych
 1. Połączenie z bazą danych
@@ -28,3 +29,5 @@
     - dokumentacja tego api
     - język
 2. napisanie funkcji dodających dane do takich wyjkresów
+
+## Połączenie wszytskiego
