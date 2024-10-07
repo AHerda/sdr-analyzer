@@ -1,6 +1,8 @@
 #include "AirSpy.hpp"
 #include "utils.hpp"
 
+#include <libairspy/airspy.h>
+
 #include <iostream>
 
 AirSpy::AirSpy() {
@@ -24,7 +26,9 @@ AirSpy::AirSpy() {
 AirSpy::~AirSpy() {
     std::cerr << "Closing device" << std::endl;
     close();
-    delete device;
+
+    if (device != nullptr)
+        free(device);
 }
 
 void AirSpy::open() {
@@ -76,7 +80,18 @@ void AirSpy::setSampleRate(uint32_t sampleRate_) {
         }
     }
 
-    error(airspy_error::AIRSPY_ERROR_INVALID_PARAM, "Invalid sample rate");
+    error(airspy_error::AIRSPY_ERROR_INVALID_PARAM, "Invalid sample rate", false);
+    std::cout << "Supported sample rates: ";
+
+    for (uint32_t i = 0; i < sampleRatesCount; i++) {
+        std::cout << sampleRates[i] << " ";
+    }
+    std::cout << "\nSetting default: " << sampleRates[0] << std::endl;
+
+    result = airspy_set_samplerate(device, sampleRates[0]);
+    if (result != airspy_error::AIRSPY_SUCCESS) {
+        error(result, "Error setting default sample rate");
+    }
 }
 
 void AirSpy::setSampleType(airspy_sample_type sampleType_) {

@@ -2,26 +2,30 @@
 
 ## SDR
 1. ~~Otworzynie połączenia z donglem~~
-2. Zaimplementowanie ustawiania słuchanej częstotliwości (i innych parametrów)
-3. Otwarcie nasłuchiwania
-4. Odebranie jakichś danych
-    * wypisanie jakichś danych
-5. Słuchanie i wypisywanie pasma 433MHz
-6. Znajdowanie konkretnych sygnałów
-7. Przeczytanie sygnałów
-8. Jak pobrać lokalizacje
-9. Pobieranie daty czasu (co do sek) oraz lokalizacji
+2. ~~Zaimplementowanie ustawiania słuchanej częstotliwości (i innych parametrów)~~
+3. ~~Otwarcie nasłuchiwania~~
+4. ~~Odebranie jakichś danych~~
+5. ~~wypisanie jakichś danych~~
+6. ~~Wypisanie danych z radia wrocław~~
+7. ~~Słuchanie i wypisywanie pasma 433MHz~~
+8. Znajdowanie konkretnych sygnałów
+9. Przeczytanie sygnałów
+10. Jak pobrać lokalizacje
+11. Pobieranie daty czasu (co do sek) oraz lokalizacji
 
 ## Baza Danych
-1. Połączenie z bazą danych
-2. Wysłanie wpisów
-3. Odczytanie wpisów
-4. Stworzenie odpowiedniej bazy danych
-5. Odpowiednie ustawienie pól z datą, czasem, oraz lokalizacją
-6. Wysłanie kilku wpisów z dokładnym czasem datą i lokalizacją
-7. Przygotowanie funkcji pod wysyłanie wpisów
-8. Przygotowanie funkcji pod odczytywanie wpisów
-9. Zaimplementowanie funkcji podliczających statystyki
+1. Wybranie bazy danych
+2. Postawienie bazy danych
+3. Ustawienie bazy danych
+4. Połączenie z bazą danych
+5. Wysłanie wpisów
+6. Odczytanie wpisów
+7. Stworzenie odpowiedniej bazy danych
+8. Odpowiednie ustawienie pól z datą, czasem, oraz lokalizacją
+9. Wysłanie kilku wpisów z dokładnym czasem datą i lokalizacją
+10. Przygotowanie funkcji pod wysyłanie wpisów
+11. Przygotowanie funkcji pod odczytywanie wpisów
+12. Zaimplementowanie funkcji podliczających statystyki
 
 ## Mapy
 1. Znalezienie co może tworzyć histogram na mapie

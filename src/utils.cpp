@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-void error(int errCode, const std::string& message) {
+void error(int errCode, const std::string& message, bool fatal) {
     std::cerr << "ERROR:" << std::endl
         << "\t" << message << std::endl;
 
@@ -61,5 +61,6 @@ void error(int errCode, const std::string& message) {
         break;
     }
 
-    throw std::runtime_error(message);
+    if (fatal)
+        throw std::runtime_error(message);
 }

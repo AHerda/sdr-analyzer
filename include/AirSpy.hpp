@@ -74,11 +74,11 @@ private:
     /// @brief Frequency in Hz
     /// @note The frequency must be between 24MHz and 1.75GHz.
     /// @note The default value is 100MHz.
-    uint32_t frequency{100_MHz};
+    uint32_t frequency{433_MHz};//{102'300_kHz};
     /// @brief Sample rate in Hz
-    /// @note The sample rate must be between 2.5MHz and 10MHz.
-    /// @note The default value is 10MHz.
-    uint32_t sampleRate{10_MHz};
+    /// @note The sample rate must be either 3MHz or 6MHz.
+    /// @note The default value is 6MHz.
+    uint32_t sampleRate{3_MHz};
     /**
      * @brief Sample type
      * @note The sample type can be one of the following: @n
@@ -89,9 +89,9 @@ private:
      * - AIRSPY_SAMPLE_UINT16_REAL @n
      * - AIRSPY_SAMPLE_RAW @n
      * - AIRSPY_SAMPLE_END @n
-     * @note The default value is AIRSPY_SAMPLE_FLOAT32_IQ.
+     * @note The default value is AIRSPY_SAMPLE_RAW.
      */
-    airspy_sample_type sampleType{airspy_sample_type::AIRSPY_SAMPLE_FLOAT32_IQ};
+    airspy_sample_type sampleType{airspy_sample_type::AIRSPY_SAMPLE_RAW};
 
     /// @brief LNA gain
     /// @note The LNA gain must be between 0 and 15.
