@@ -1,5 +1,6 @@
-#include "AirSpy.hpp"
-#include "utils.hpp"
+#include <AirSpy.hpp>
+#include <DataProcessor.hpp>
+#include <utils.hpp>
 
 #include <libairspy/airspy.h>
 
@@ -80,13 +81,19 @@ void AirSpy::setSampleRate(uint32_t sampleRate_) {
         }
     }
 
-    error(airspy_error::AIRSPY_ERROR_INVALID_PARAM, "Invalid sample rate", false);
+    error(
+        airspy_error::AIRSPY_ERROR_INVALID_PARAM,
+        "Invalid sample rate: " + std::to_string(sampleRate_),
+        false
+    );
     std::cout << "Supported sample rates: ";
 
     for (uint32_t i = 0; i < sampleRatesCount; i++) {
         std::cout << sampleRates[i] << " ";
     }
     std::cout << "\nSetting default: " << sampleRates[0] << std::endl;
+
+    sampleRate = sampleRates[0];
 
     result = airspy_set_samplerate(device, sampleRates[0]);
     if (result != airspy_error::AIRSPY_SUCCESS) {
@@ -197,9 +204,40 @@ void AirSpy::startRx(airspy_sample_block_cb_fn callback, void* userData) {
     }
 }
 
+void AirSpy::startRx(void* userData) {
+    ((DataProcessor*) userData)->setSampleRate(sampleRate);
+
+    startRx(AirSpy::airpspyCallback, userData);
+}
+
 void AirSpy::stopRx() {
     int result = airspy_stop_rx(device);
     if (result != airspy_error::AIRSPY_SUCCESS) {
         error(result, "Error stopping RX");
     }
+}
+
+int AirSpy::airpspyCallback(airspy_transfer_t* transfer) {
+    std::vector<IQSample> samples;
+    samples.reserve(transfer->sample_count);
+
+    if (transfer->sample_type != airspy_sample_type::AIRSPY_SAMPLE_FLOAT32_IQ) {
+        error(airspy_error::AIRSPY_ERROR_INVALID_PARAM, "Invalid sample type", false);
+        return 1;
+    }
+
+    if (transfer->dropped_samples) {
+        std::string message = "Dropped samples: " + std::to_string(transfer->dropped_samples);
+        transfer->dropped_samples = 0;
+        error(airspy_error::AIRSPY_ERROR_OTHER, message, false);
+    }
+
+    for (int i = 0; i < transfer->sample_count; i++) {
+        samples.push_back(std::make_pair(((float*) transfer->samples)[i * 2], ((float*) transfer->samples)[i * 2 + 1]));
+    }
+
+    DataProcessor* dataProcessor = (DataProcessor*) transfer->ctx;
+    dataProcessor->process(samples);
+
+    return 0;
 }

@@ -37,7 +37,7 @@ add_library(airspy STATIC IMPORTED)
 set_target_properties(airspy PROPERTIES IMPORTED_LOCATION ${libairspy_location})
 
 # Add the executable for the main application
-file(GLOB_RECURSE HEADERS include/*.cpp)
+file(GLOB_RECURSE HEADERS include/*.hpp)
 file(GLOB_RECURSE SOURCES src/*.cpp)
 add_executable(sdr-sniffer ${SOURCES} ${HEADERS})
 

@@ -1,10 +1,11 @@
 #pragma once
 
-#include "units.hpp"
+#include <units.hpp>
 
 #include <libairspy/airspy.h>
 
 #include <cstdint>
+#include <vector>
 
 class AirSpy
 {
@@ -19,7 +20,15 @@ public:
 
     /// @brief Set the frequency
     void setFrequency(uint32_t frequency_);
-    /// @brief Set the sample rate
+    /**
+     * @brief Set the sample rate.
+     * Sample reate in this context is the bandwidth of the signal
+     * with the frequency field as a center frequency.
+     * eg. if the frequency is 100MHz and the sample rate is 6MHz,
+     * the resulting band will be from 97MHz to 103MHz.
+     * @note The sample rate must be either 3MHz or 6MHz.
+     * @note The default value is 6MHz.
+     */
     void setSampleRate(uint32_t sampleRate_);
     /// @brief Set the sample type
     void setSampleType(airspy_sample_type sampleType_);
@@ -49,7 +58,11 @@ public:
     /// @param callback The callback function
     /// @param userData The user data
     void startRx(airspy_sample_block_cb_fn callback, void* userData);
+    void startRx(void* userData);
+    /// @brief Stops the reception process
     void stopRx();
+
+    static int airpspyCallback(airspy_transfer_t* transfer);
 
     void setSi5351cRegister(uint8_t registerNumber, uint8_t value);
     void readSi5351cRegister(uint8_t registerNumber, uint8_t* value);
@@ -73,12 +86,18 @@ private:
 
     /// @brief Frequency in Hz
     /// @note The frequency must be between 24MHz and 1.75GHz.
-    /// @note The default value is 100MHz.
-    uint32_t frequency{433_MHz};//{102'300_kHz};
-    /// @brief Sample rate in Hz
-    /// @note The sample rate must be either 3MHz or 6MHz.
-    /// @note The default value is 6MHz.
-    uint32_t sampleRate{3_MHz};
+    /// @note The default value is 434MHz.
+    uint32_t frequency{433'925_kHz};
+    /**
+     * @brief Sample rate in Hz
+     * @note Sample rate in this context is the bandwidth of the signal
+     * with the frequency field as a center frequency.
+     * eg. if the frequency is 100MHz and the sample rate is 6MHz,
+     * the resulting band will be from 97MHz to 103MHz.
+     * @note The sample rate must be either 3MHz or 6MHz.
+     * @note The default value is 6MHz.
+     */
+    uint32_t sampleRate{20_MHz};
     /**
      * @brief Sample type
      * @note The sample type can be one of the following: @n
@@ -89,9 +108,9 @@ private:
      * - AIRSPY_SAMPLE_UINT16_REAL @n
      * - AIRSPY_SAMPLE_RAW @n
      * - AIRSPY_SAMPLE_END @n
-     * @note The default value is AIRSPY_SAMPLE_RAW.
+     * @note The default value is AIRSPY_SAMPLE_FLOAT32_IQ.
      */
-    airspy_sample_type sampleType{airspy_sample_type::AIRSPY_SAMPLE_RAW};
+    airspy_sample_type sampleType{airspy_sample_type::AIRSPY_SAMPLE_FLOAT32_IQ};
 
     /// @brief LNA gain
     /// @note The LNA gain must be between 0 and 15.
