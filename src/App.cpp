@@ -1,28 +1,23 @@
 #include <App.hpp>
 #include <utils.hpp>
 
+#include <ctime>
 #include <iostream>
 #include <thread>
 
 void App::run() {
     // AirSpy::counter = 0;
+    // in minutes
+    int time = 1;
+    std::time_t startTime = std::time(0);
     airSpy.startRx(&dataProcessor);
 
     std::thread timerThread([&]() {
-        int time = 120;
-        std::cout << "this thread will work for " << time << " minutes\n";
-        std::this_thread::sleep_for(std::chrono::minutes(120)); // Wait for 60 seconds
-        airSpy.stopRx(); // Stop receiving after the wait
+        std::cout << "this thread will work for " << time << " minute" << (time != 1 ? "s\n" : "\n");
+        std::this_thread::sleep_for(std::chrono::minutes(time));
+        airSpy.stopRx();
         std::cout << "Stopped receiving after 1 minute." << std::endl;
     });
-
-    // Main loop (keep the program alive or do other tasks)
-    // while (true) {
-    //     // Perform any other tasks or keep the application alive
-    //     // Optional: break out if needed based on a condition or state
-    // }
-
-    // Join the timer thread (optional, in case the program ends)
     timerThread.join();
 
     // auto min = dataProcessor.getMin();
@@ -30,5 +25,14 @@ void App::run() {
     std::cout << "RESULTS OF WHOLE APP\n";
     auto avgs = dataProcessor.getAvgs();
 
-    logStatsOfVec(avgs, "balkon-3:00", "../data/godzinny-test-3-4.csv");
+    logStatsOfVec(
+        avgs,
+        Info {
+            "",
+            "../data/pokoj.csv",
+            startTime,
+            time * 60,
+            true
+        }
+    );
 }

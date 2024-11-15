@@ -97,22 +97,26 @@ void drawAsciiGraph(const std::vector<float>& data) {
 
 void logStatsOfVec(
     const std::vector<float>& data,
-    const std::string& description,
-    std::optional<std::string> fileName,
-    bool append
+    std::optional<Info> dataInfo
 ) {
     const float avg = std::accumulate(data.begin(), data.end(), 0.0) / data.size();
     const float min = *std::ranges::min_element(data);
     const float max = *std::ranges::max_element(data);
-    if (fileName) {
+    if (dataInfo) {
+        const Info info = dataInfo.value();
         std::ofstream stream;
-        if (append) {
-            stream.open(fileName.value(), std::ios_base::app);
+        if (info.append) {
+            stream.open(info.fileName, std::ios_base::app);
         } else {
-            stream.open(fileName.value());
-            stream << "description;min;max;avg" << std::endl;
+            stream.open(info.fileName);
+            stream << "description;date;time;duration_s;min;max;avg" << std::endl;
         }
-        stream << description << ";" << min << ";" << max << ";" << avg << std::endl;
+        tm* ltm = std::localtime(&(info.startTime));
+
+
+        std::string date = std::to_string(ltm->tm_mday) + "-" + std::to_string(1 + ltm->tm_mon) + "-" + std::to_string(1900 + ltm->tm_year);
+        std::string time = std::to_string(ltm->tm_hour) + ":" + std::to_string(ltm->tm_min) + ":" + std::to_string(ltm->tm_sec);
+        stream << info.description << ";" << date << ";" << time << ";" << info.durationS << ";" << min << ";" << max << ";" << avg << std::endl;
         stream.close();
     }
     else
