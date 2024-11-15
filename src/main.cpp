@@ -12,7 +12,7 @@
 void startListeningTesting(AirSpy& airspy) {
     airspy.startRx([](airspy_transfer_t* transfer) {
         // std::ostream ss;
-        float* samples = (float*) transfer->samples;
+        // float* samples = (float*) transfer->samples;
         // uint64_t avg = 0;
         // uint8_t max = 0;
         // uint32_t maxIdx = 0;

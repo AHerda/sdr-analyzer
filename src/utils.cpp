@@ -3,6 +3,7 @@
 #include <libairspy/airspy.h>
 
 #include <algorithm>
+#include <numeric>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -92,4 +93,30 @@ void drawAsciiGraph(const std::vector<float>& data) {
     }
 
     // std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+}
+
+void logStatsOfVec(
+    const std::vector<float>& data,
+    const std::string& description,
+    std::optional<std::string> fileName,
+    bool append
+) {
+    const float avg = std::accumulate(data.begin(), data.end(), 0.0) / data.size();
+    const float min = *std::ranges::min_element(data);
+    const float max = *std::ranges::max_element(data);
+    if (fileName) {
+        std::ofstream stream;
+        if (append) {
+            stream.open(fileName.value(), std::ios_base::app);
+        } else {
+            stream.open(fileName.value());
+            stream << "description;min;max;avg" << std::endl;
+        }
+        stream << description << ";" << min << ";" << max << ";" << avg << std::endl;
+        stream.close();
+    }
+    else
+        std::cout << "min: " << min << std::endl
+            << "max: " << max << std::endl
+            << "avg: " << avg << std::endl;
 }

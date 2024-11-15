@@ -80,6 +80,7 @@ public:
     void readBoardId(uint8_t* value);
     void readVersionString(char* version, uint8_t length);
 
+    static int counter;
 private:
     airspy_device* device;
     airspy_read_partid_serialno_t serial;
@@ -97,7 +98,7 @@ private:
      * @note The sample rate must be either 3MHz or 6MHz.
      * @note The default value is 6MHz.
      */
-    uint32_t sampleRate{20_MHz};
+    uint32_t sampleRate{3_MHz};
     /**
      * @brief Sample type
      * @note The sample type can be one of the following: @n

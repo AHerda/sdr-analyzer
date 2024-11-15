@@ -26,10 +26,13 @@ AirSpy::AirSpy() {
 
 AirSpy::~AirSpy() {
     std::cerr << "Closing device" << std::endl;
-    close();
+    // close();
 
-    if (device != nullptr)
+    if (device) {
+        std::cout << "Device is not null";
         free(device);
+        device = nullptr;
+    }
 }
 
 void AirSpy::open() {
@@ -205,9 +208,12 @@ void AirSpy::startRx(airspy_sample_block_cb_fn callback, void* userData) {
 }
 
 void AirSpy::startRx(void* userData) {
-    ((DataProcessor*) userData)->setSampleRate(sampleRate);
-
-    startRx(AirSpy::airpspyCallback, userData);
+    startRx(
+        [](airspy_transfer_t* transfer) -> int {
+            return AirSpy::airpspyCallback(transfer);
+        },
+        userData
+    );
 }
 
 void AirSpy::stopRx() {
@@ -227,17 +233,20 @@ int AirSpy::airpspyCallback(airspy_transfer_t* transfer) {
     }
 
     if (transfer->dropped_samples) {
-        std::string message = "Dropped samples: " + std::to_string(transfer->dropped_samples);
+        std::string message =
+            //"Samples no. " + std::to_string(AirSpy::counter) +
+            "\nDropped samples: " + std::to_string(transfer->dropped_samples);
         transfer->dropped_samples = 0;
         error(airspy_error::AIRSPY_ERROR_OTHER, message, false);
     }
 
     for (int i = 0; i < transfer->sample_count; i++) {
-        samples.push_back(std::make_pair(((float*) transfer->samples)[i * 2], ((float*) transfer->samples)[i * 2 + 1]));
+        samples.push_back(IQSample(((float*) transfer->samples)[i * 2], ((float*) transfer->samples)[i * 2 + 1]));
     }
 
     DataProcessor* dataProcessor = (DataProcessor*) transfer->ctx;
     dataProcessor->process(samples);
 
+    // AirSpy::counter++;
     return 0;
 }
