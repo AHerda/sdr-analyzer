@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < (redo > 0 ? (redo > 72 ? 72: redo) : 1); i++) {
         app.run();
         app.reset();
-        std::this_thread::sleep_for(std::chrono::minutes(1));
+        std::this_thread::sleep_for(std::chrono::seconds(15));
     }
 
     return 0;

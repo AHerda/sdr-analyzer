@@ -11,8 +11,8 @@ void App::run() {
     airSpy.startRx(&dataProcessor);
 
     std::thread timerThread([&]() {
-        std::cout << "this thread will work for " << duration << " minute" << (duration != 1 ? "s\n" : "\n");
-        std::this_thread::sleep_for(std::chrono::minutes(duration));
+        std::cout << "this thread will work for " << duration << " second" << (duration != 1 ? "s\n" : "\n");
+        std::this_thread::sleep_for(std::chrono::seconds(duration));
         airSpy.stopRx();
         std::cout << "Stopped receiving after 1 minute." << std::endl;
     });
@@ -20,6 +20,8 @@ void App::run() {
     timerThread.join();
 
     logData(startTime);
+
+    setAppend();
 }
 
 void App::logData(std::time_t startTime) {
@@ -35,7 +37,7 @@ void App::logData(std::time_t startTime) {
             fileName,
             startTime,
             frequency,
-            duration * 60,
+            duration,
             append
         }
     );
