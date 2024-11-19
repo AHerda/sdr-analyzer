@@ -16,18 +16,22 @@ public:
 
     void process(const std::vector<IQSample>& samples);
 
-    std::vector<float> complexToMagSq(const std::vector<IQSample>& samples);
+    std::vector<float> complexToMagSq(const std::vector<IQSample>& samples) const;
     void collectStatistics(const std::vector<float>& data);
 
-    std::vector<float> applyLowPassFilter(const std::vector<float>& signal, int filterOrder) const;
+    std::vector<float> applyLowPassFilter(const std::vector<float>& signal) const;
 
     float getMin() const;
     float getMax() const;
     std::vector<float> getAvgs() const;
+
+    void reset();
+
 private:
+    int filterOrder{10};
     bool logs{false};
 
-    float max;
-    float min;
+    float max{0.0};
+    float min{1.0};
     std::vector<float> avgs;
 };

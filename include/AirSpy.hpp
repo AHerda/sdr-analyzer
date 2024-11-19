@@ -11,6 +11,7 @@ class AirSpy
 {
 public:
     AirSpy();
+    AirSpy(uint32_t frequency_);
     ~AirSpy();
 
     /// @brief Open the device
@@ -87,8 +88,8 @@ private:
 
     /// @brief Frequency in Hz
     /// @note The frequency must be between 24MHz and 1.75GHz.
-    /// @note The default value is 434MHz.
-    uint32_t frequency{433'925_kHz};
+    /// @note The default value is 433.92MHz.
+    uint32_t frequency;
     /**
      * @brief Sample rate in Hz
      * @note Sample rate in this context is the bandwidth of the signal
@@ -132,7 +133,7 @@ private:
     /// @brief Sensitivity gain
     /// @note The Sensitivity gain must be between 0 and 21.
     /// @note The default value is 10.
-    uint8_t sensitivityGain{10};
+    uint8_t sensitivityGain{20};
     bool lnaAgc{false};
     bool mixerAgc{false};
     bool rfBias{false};

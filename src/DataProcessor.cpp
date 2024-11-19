@@ -17,18 +17,14 @@ DataProcessor::~DataProcessor() {
 }
 
 void DataProcessor::process(const std::vector<IQSample>& samples) {
-    const std::vector<float> data = complexToMagSq(samples);
-    // logStatsOfVec(magSq);
-    //drawAsciiGraph(magSq);
-    // FMDemodulate();
+    const std::vector<float> magnitude = complexToMagSq(samples);
 
-    // drawAsciiGraph(magSq);
-    // drawAsciiGraph(FMDemodulated);
+    const std::vector<float> filtered = applyLowPassFilter(magnitude);
 
-    collectStatistics(data);
+    collectStatistics(filtered);
 }
 
-std::vector<float> DataProcessor::complexToMagSq(const std::vector<IQSample>& samples) {
+std::vector<float> DataProcessor::complexToMagSq(const std::vector<IQSample>& samples) const {
     std::vector<float> data;
     data.reserve(samples.size());
 
@@ -54,16 +50,15 @@ void DataProcessor::collectStatistics(const std::vector<float>& data) {
 }
 
 std::vector<float> DataProcessor::applyLowPassFilter(
-    const std::vector<float>& signal,
-    int filterOrder
+    const std::vector<float>& signal
 ) const {
-    std::vector<float> filtered(signal.size(), 0.0);
+    std::vector<float> filtered(signal.size() - filterOrder, 0.0);
     for (size_t i = filterOrder; i < signal.size(); ++i) {
         float sum = 0.0;
         for (int j = 0; j < filterOrder; ++j) {
             sum += signal[i - j];
         }
-        filtered[i] = sum / filterOrder;
+        filtered[i - filterOrder] = sum / filterOrder;
     }
 
     return filtered;
@@ -77,4 +72,9 @@ float DataProcessor::getMax() const {
 }
 std::vector<float> DataProcessor::getAvgs() const {
     return avgs;
+}
+
+void DataProcessor::reset() {
+    std::swap(min, max);
+    avgs.clear();
 }

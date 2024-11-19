@@ -6,11 +6,16 @@
 
 #include <iostream>
 
-AirSpy::AirSpy() {
+AirSpy::AirSpy() :
+    AirSpy(433'920_kHz)
+{
+}
+
+AirSpy::AirSpy(uint32_t frequency_) {
     open();
     readPartIdSerialNo();
 
-    setFrequency(frequency);
+    setFrequency(frequency_);
     setSampleRate(sampleRate);
     setSampleType(sampleType);
     setLnaGain(lnaGain);

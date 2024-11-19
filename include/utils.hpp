@@ -11,7 +11,8 @@ typedef struct {
     std::string description;
     std::string fileName;
     std::time_t startTime;
-    int durationS;
+    uint32_t frequency;
+    uint32_t durationS;
     bool append;
 } Info;
 
