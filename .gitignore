@@ -1,4 +1,8 @@
 build
 .vscode
+
+# python stuff
 scripts
-test.c
+pyvenv.cfg
+Lib
+share
