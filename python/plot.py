@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime
+import re
 import os
 
 data_path = "data/"
@@ -16,7 +17,9 @@ def main():
     print(files)
 
     for file in files:
-        process_file(data_path + file)
+        if re.search(".csv$", file):
+            print(f"processing: {file}")
+            process_file(data_path + file)
 
 # Process one file, creating two plots
 def process_file(filename):
@@ -25,8 +28,7 @@ def process_file(filename):
     data = pd.read_csv(filename, delimiter=';')
 
     # Convert date and time into a single datetime column
-    data['datetime'] = data['date'] + ' ' + data['time']
-    data['datetime'] = pd.to_datetime(data['datetime'], format='%d-%m-%Y %H:%M:%S')
+    data['datetime'] = pd.to_datetime(data['date'] + ' ' + data['time'], format='%d-%m-%Y %H:%M:%S')
 
     # Extract description, frequency, and duration for the title and subtitle
     description = data['description'].iloc[0].capitalize().replace("-", " ")

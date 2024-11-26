@@ -92,10 +92,6 @@ private:
     uint32_t frequency;
     /**
      * @brief Sample rate in Hz
-     * @note Sample rate in this context is the bandwidth of the signal
-     * with the frequency field as a center frequency.
-     * eg. if the frequency is 100MHz and the sample rate is 6MHz,
-     * the resulting band will be from 97MHz to 103MHz.
      * @note The sample rate must be either 3MHz or 6MHz.
      * @note The default value is 6MHz.
      */

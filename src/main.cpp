@@ -2,11 +2,12 @@
 
 #include <chrono>
 #include <cstring>
+#include <iostream>
 #include <thread>
 
 int main(int argc, char* argv[]) {
     App app;
-    int redo = 1;
+    int repeat = 1;
 
     if (argc > 1) {
         for (int i = 0; i < argc; i++) {
@@ -18,14 +19,15 @@ int main(int argc, char* argv[]) {
                 app.setFileName(argv[++i]);
             else if (std::strcmp(argv[i], "--time") == 0 || std::strcmp(argv[i], "-t") == 0)
                 app.setDuration(std::stoi(argv[++i]));
-            else if (std::strcmp(argv[i], "--redo") == 0 || std::strcmp(argv[i], "-r") == 0)
-                redo = std::stoi(argv[++i]);
+            else if (std::strcmp(argv[i], "--repeat") == 0 || std::strcmp(argv[i], "-r") == 0)
+                repeat = std::stoi(argv[++i]);
             else if (std::strcmp(argv[i], "--append") == 0 || std::strcmp(argv[i], "-a") == 0)
                 app.setAppend();
         }
     }
 
-    for (int i = 0; i < (redo > 0 ? (redo > 72 ? 72: redo) : 1); i++) {
+    for (int i = 0; i < repeat; i++) {
+        std::cout << "Test iteration: " << i + 1 << "/" << repeat << " (" << (float) i / (float) repeat * 100. << "%)" << std::endl; 
         app.run();
         app.reset();
         std::this_thread::sleep_for(std::chrono::seconds(15));

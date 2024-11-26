@@ -1,8 +1,11 @@
 build
+*log*
 .vscode
 
 # python stuff
-scripts
-pyvenv.cfg
 Lib
+bin
+lib*
+pyvenv.cfg
+scripts
 share
