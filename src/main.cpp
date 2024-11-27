@@ -30,7 +30,8 @@ int main(int argc, char* argv[]) {
         std::cout << "Test iteration: " << i + 1 << "/" << repeat << " (" << (float) i / (float) repeat * 100. << "%)" << std::endl; 
         app.run();
         app.reset();
-        std::this_thread::sleep_for(std::chrono::seconds(15));
+        if (i + 1 != repeat)
+            std::this_thread::sleep_for(std::chrono::seconds(15));
     }
 
     return 0;

@@ -51,14 +51,26 @@ void DataProcessor::collectStatistics(const std::vector<float>& data) {
 
 std::vector<float> DataProcessor::applyLowPassFilter(
     const std::vector<float>& signal
-) const {
-    std::vector<float> filtered(signal.size() - filterOrder, 0.0);
-    for (size_t i = filterOrder; i < signal.size(); ++i) {
+) {
+    std::vector<float> filtered(signal.size(), 0.0);
+
+    for (size_t i = 0; i < signal.size(); ++i) {
         float sum = 0.0;
-        for (int j = 0; j < filterOrder; ++j) {
-            sum += signal[i - j];
+        for (size_t j = 0; j < filterOrder; ++j) {
+            if (i >= j)
+                sum += signal[i - j];
+            else
+                sum += (lastData.size() + i >= j
+                    ?   lastData[lastData.size() + i - j]
+                    :   0.0);
         }
-        filtered[i - filterOrder] = sum / filterOrder;
+        filtered[i] = sum / filterOrder;
+
+        if (i + filterOrder == signal.size()) {
+            lastData.clear();
+        } else if (i + filterOrder > signal.size()) {
+            lastData.push_back(signal[i]);
+        }
     }
 
     return filtered;

@@ -19,7 +19,7 @@ public:
     std::vector<float> complexToMagSq(const std::vector<IQSample>& samples) const;
     void collectStatistics(const std::vector<float>& data);
 
-    std::vector<float> applyLowPassFilter(const std::vector<float>& signal) const;
+    std::vector<float> applyLowPassFilter(const std::vector<float>& signal);
 
     float getMin() const;
     float getMax() const;
@@ -28,8 +28,10 @@ public:
     void reset();
 
 private:
-    int filterOrder{10};
+    int filterOrder{4};
     bool logs{false};
+
+    std::vector<float> lastData;
 
     float max{0.0};
     float min{1.0};

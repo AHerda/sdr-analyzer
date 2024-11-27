@@ -30,11 +30,11 @@ AirSpy::AirSpy(uint32_t frequency_) {
 }
 
 AirSpy::~AirSpy() {
-    std::cerr << "Closing device" << std::endl;
+    std::cout << "Closing device" << std::endl;
     // close();
 
     if (device) {
-        std::cout << "Device is not null";
+        std::cerr << "Device is not null";
         free(device);
         device = nullptr;
     }

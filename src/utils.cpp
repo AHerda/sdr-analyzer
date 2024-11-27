@@ -39,9 +39,9 @@ void error(int errCode, const std::string& message, bool fatal) {
         std::cerr << "\tNo memory" << std::endl;
         break;
 
-    case airspy_error::AIRSPY_ERROR_UNSUPPORTED:
-        std::cerr << "\tUnsupported" << std::endl;
-        break;
+    // case airspy_error::AIRSPY_ERROR_UNSUPPORTED:
+    //     std::cerr << "\tUnsupported" << std::endl;
+    //     break;
 
     case airspy_error::AIRSPY_ERROR_LIBUSB:
         std::cerr << "\tLibUSB" << std::endl;
@@ -100,8 +100,8 @@ void logStatsOfVec(
     std::optional<Info> dataInfo
 ) {
     const float avg = std::accumulate(data.begin(), data.end(), 0.0) / data.size();
-    const float min = *std::ranges::min_element(data);
-    const float max = *std::ranges::max_element(data);
+    const float min = *std::min_element(data.begin(), data.end());
+    const float max = *std::max_element(data.begin(), data.end());
     if (dataInfo) {
         const Info info = dataInfo.value();
         std::ofstream stream;

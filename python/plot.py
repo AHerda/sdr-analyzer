@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime
@@ -19,7 +20,11 @@ def main():
     for file in files:
         if re.search(".csv$", file):
             print(f"processing: {file}")
-            process_file(data_path + file)
+            if re.search("heatmap", file):
+                create_histogram(data_path + file)
+            else:
+                # process_file(data_path + file)
+                print("dupa")
 
 # Process one file, creating two plots
 def process_file(filename):
@@ -71,6 +76,7 @@ def create_plot(filename, data, title, subtitle, outliers_removed=False):
 
     # Add subtitle with frequency and duration
     plt.suptitle(subtitle, fontsize=10)
+    plt.title(title, fontsize=16)
 
     # File name adjustment based on outliers condition
     suffix = '_no_outliers' if outliers_removed else ''
@@ -78,6 +84,31 @@ def create_plot(filename, data, title, subtitle, outliers_removed=False):
     fig.tight_layout(pad=2.0)
     plt.savefig(f'plots/{filename}{suffix}.png')
     plt.close()
+
+def create_histogram(filename):
+    data = pd.read_csv(filename, delimiter=';')
+
+    data['row'] = data['description'].str.extract(r'x(\d)')[0].astype(int)
+    data['col'] = data['description'].str.extract(r'(\d)x')[0].astype(int)
+
+    max_row = data['row'].max() + 1
+    max_col = data['col'].max() + 1
+
+    avgs = np.full((max_row, max_col), 0.)
+    mins = np.full((max_row, max_col), 0.)
+    maxs = np.full((max_row, max_col), 0.)
+
+    for _, row in data.iterrows():
+        r, c = row['row'], row['col']
+        avgs[r, c] = row['avg']
+        mins[r, c] = row['min']
+        maxs[r, c] = row['max']
+
+    for data_array, name in [(avgs, "avgs"), (mins, "mins"), (maxs, "maxs")]:
+        plt.figure(figsize=(16, 12))
+        plt.title(f"filename")
+        plt.imshow(data_array, cmap='coolwarm')
+        plt.savefig(f'plots/{filename[5:-4]}_{name}.png')
 
 # Removing outliers for the second plot
 def remove_outliers(df, column):
