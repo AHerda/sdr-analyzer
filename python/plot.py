@@ -108,6 +108,7 @@ def create_histogram(filename):
         plt.figure(figsize=(16, 12))
         plt.title(f"filename")
         plt.imshow(data_array, cmap='coolwarm')
+        plt.colorbar()
         plt.savefig(f'plots/{filename[5:-4]}_{name}.png')
 
 # Removing outliers for the second plot
