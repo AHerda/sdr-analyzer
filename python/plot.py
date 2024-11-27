@@ -100,9 +100,9 @@ def create_histogram(filename):
 
     for _, row in data.iterrows():
         r, c = row['row'], row['col']
-        avgs[r, c] = row['avg']
-        mins[r, c] = row['min']
-        maxs[r, c] = row['max']
+        avgs[r, c] += row['avg'] / 2.
+        mins[r, c] += row['min'] / 2.
+        maxs[r, c] += row['max'] / 2.
 
     for data_array, name in [(avgs, "avgs"), (mins, "mins"), (maxs, "maxs")]:
         plt.figure(figsize=(16, 12))
