@@ -23,8 +23,7 @@ def main():
             if re.search("heatmap", file):
                 create_histogram(data_path + file)
             else:
-                # process_file(data_path + file)
-                print("dupa")
+                process_file(data_path + file)
 
 # Process one file, creating two plots
 def process_file(filename):
@@ -41,7 +40,7 @@ def process_file(filename):
     duration = data['duration_s'].iloc[0]
 
     # First plot: Original data
-    title = description
+    title = file_path[:-4].capitalize().replace("-", " ")
     subtitle = f"Frequency: {frequency}Hz, Duration: {duration}s"
     create_plot(file_path, data, title, subtitle)
 
@@ -62,16 +61,18 @@ def create_plot(filename, data, title, subtitle, outliers_removed=False):
     metrics = ['min', 'max', 'avg']
     colors = ['blue', 'red', 'green']
     labels = ['Min', 'Max', 'Avg']
+    # plt.title(title, fontsize=16)
 
     for i, (metric, color, label) in enumerate(zip(metrics, colors, labels)):
         axs[i].xaxis.set_major_formatter(myFmt)
         axs[i].plot(data['datetime'], data[metric], label=label, color=color, alpha=0.7)
-        axs[i].set_title(f"{label} Values", fontsize=14)
+        # axs[i].set_title(f"{label} Values", fontsize=14)
         axs[i].set_ylabel('Values', fontsize=12)
         axs[i].grid(True, linestyle='--', alpha=0.5)
         axs[i].legend()
 
     axs[-1].set_xlabel('Datetime', fontsize=12)
+    axs[0].set_title(title, fontsize=18)
     #plt.xticks()
 
     # Add subtitle with frequency and duration
@@ -81,7 +82,7 @@ def create_plot(filename, data, title, subtitle, outliers_removed=False):
     suffix = '_no_outliers' if outliers_removed else ''
 
     fig.tight_layout(pad=2.0)
-    plt.savefig(f'plots/{filename}{suffix}.png')
+    plt.savefig(f'plots2/{filename}{suffix}.png')
     plt.close()
 
 def create_histogram(filename):
@@ -108,11 +109,11 @@ def create_histogram(filename):
         maxs[r, c] += row['max'] / 2.
 
     for data_array, name in [(avgs, "avgs"), (mins, "mins"), (maxs, "maxs")]:
-        plt.figure(figsize=(16, 12))
+        plt.figure(figsize=(16, 10))
         plt.title(f"{title}")
         plt.imshow(data_array, cmap='coolwarm')
         plt.colorbar()
-        plt.savefig(f'plots/{filename[5:-4]}_{name}.png')
+        plt.savefig(f'plots2/{filename[5:-4]}_{name}.png')
 
 # Removing outliers for the second plot
 def remove_outliers(df, column):
