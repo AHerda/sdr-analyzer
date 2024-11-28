@@ -109,7 +109,7 @@ void logStatsOfVec(
             stream.open(info.fileName, std::ios_base::app);
         } else {
             stream.open(info.fileName);
-            stream << "description;date;time;duration_s;frequnecy;min;max;avg" << std::endl;
+            stream << "description;date;time;duration_s;frequency;min;max;avg" << std::endl;
         }
         tm* ltm = std::localtime(&(info.startTime));
 

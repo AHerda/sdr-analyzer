@@ -37,7 +37,7 @@ def process_file(filename):
 
     # Extract description, frequency, and duration for the title and subtitle
     description = data['description'].iloc[0].capitalize().replace("-", " ")
-    frequency = data['frequnecy'].iloc[0]  # Assuming 'frequnecy' is a typo in the header
+    frequency = data['frequency'].iloc[0]
     duration = data['duration_s'].iloc[0]
 
     # First plot: Original data
@@ -76,7 +76,6 @@ def create_plot(filename, data, title, subtitle, outliers_removed=False):
 
     # Add subtitle with frequency and duration
     plt.suptitle(subtitle, fontsize=10)
-    plt.title(title, fontsize=16)
 
     # File name adjustment based on outliers condition
     suffix = '_no_outliers' if outliers_removed else ''
@@ -87,6 +86,10 @@ def create_plot(filename, data, title, subtitle, outliers_removed=False):
 
 def create_histogram(filename):
     data = pd.read_csv(filename, delimiter=';')
+    frequency = data['frequency'].iloc[0]
+
+    title = filename[5:-4].capitalize().replace("-", " ")
+    subtitle = f"Frequency: {frequency}Hz"
 
     data['row'] = data['description'].str.extract(r'x(\d)')[0].astype(int)
     data['col'] = data['description'].str.extract(r'(\d)x')[0].astype(int)
@@ -106,7 +109,7 @@ def create_histogram(filename):
 
     for data_array, name in [(avgs, "avgs"), (mins, "mins"), (maxs, "maxs")]:
         plt.figure(figsize=(16, 12))
-        plt.title(f"filename")
+        plt.title(f"{title}")
         plt.imshow(data_array, cmap='coolwarm')
         plt.colorbar()
         plt.savefig(f'plots/{filename[5:-4]}_{name}.png')

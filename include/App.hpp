@@ -34,7 +34,7 @@ private:
     uint32_t frequency{433'920_kHz};
     /// @brief Duration of the measurments. In minutes
     /// @note The default duration is 1 min
-    uint32_t duration{1};
+    uint32_t duration{60};
     /// @brief Flag to check if statistics should be appended to the file or just override the existing data
     bool append{false};
 

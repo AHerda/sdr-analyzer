@@ -1,4 +1,4 @@
-description;date;time;duration_s;frequnecy;min;max;avg
+description;date;time;duration_s;frequency;min;max;avg
 mieszkanie_10x1min;23-11-2024;16:33:16;60;433920000;0.000955232;0.00503389;0.00148711
 mieszkanie_10x1min;23-11-2024;16:34:31;60;433920000;0.000838666;0.00371948;0.00131876
 mieszkanie_10x1min;23-11-2024;16:35:46;60;433920000;0.00100009;0.00661188;0.00161694

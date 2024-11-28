@@ -1,4 +1,4 @@
-description;date;time;duration_s;frequnecy;min;max;avg
+description;date;time;duration_s;frequency;min;max;avg
 balkon_869MHz_24hx1m;25-11-2024;0:25:32;60;869000000;5.03918e-06;0.00190324;5.81548e-06
 balkon_869MHz_24hx1m;25-11-2024;0:26:47;60;869000000;5.06439e-06;5.41341e-06;5.19495e-06
 balkon_869MHz_24hx1m;25-11-2024;0:28:2;60;869000000;5.0733e-06;0.000896452;5.53396e-06

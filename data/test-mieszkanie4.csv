@@ -1,4 +1,4 @@
-description;date;time;duration_s;frequnecy;min;max;avg
+description;date;time;duration_s;frequency;min;max;avg
 meiszkanie_869MHz;24-11-2024;13:27:46;60;869000000;4.00172e-06;4.33933e-06;4.10727e-06
 meiszkanie_869MHz;24-11-2024;13:29:1;60;869000000;3.91955e-06;4.22242e-06;4.0322e-06
 meiszkanie_869MHz;24-11-2024;13:30:16;60;869000000;3.88688e-06;6.23268e-05;4.00047e-06
