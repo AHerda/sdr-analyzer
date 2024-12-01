@@ -72,8 +72,8 @@ def create_plot(filename, data, title, subtitle, outliers_removed=False):
         axs[i].legend()
 
     axs[-1].set_xlabel('Datetime', fontsize=12)
-    axs[0].set_title(title, fontsize=18)
-    #plt.xticks()
+    # axs[0].set_title(title, fontsize=18)
+    # plt.xticks()
 
     # Add subtitle with frequency and duration
     plt.suptitle(subtitle, fontsize=10)
@@ -110,7 +110,7 @@ def create_histogram(filename):
 
     for data_array, name in [(avgs, "avgs"), (mins, "mins"), (maxs, "maxs")]:
         plt.figure(figsize=(16, 10))
-        plt.title(f"{title}")
+        # plt.title(f"{title}")
         plt.imshow(data_array, cmap='coolwarm')
         plt.colorbar()
         plt.savefig(f'plots2/{filename[5:-4]}_{name}.png')
