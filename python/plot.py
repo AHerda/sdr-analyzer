@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime
+import math
 import re
 import os
 
@@ -98,15 +99,24 @@ def create_histogram(filename):
     max_row = data['row'].max() + 1
     max_col = data['col'].max() + 1
 
-    avgs = np.full((max_row, max_col), 0.)
-    mins = np.full((max_row, max_col), 0.)
-    maxs = np.full((max_row, max_col), 0.)
+    counters = np.full((max_row, max_col), 0)
+    avgs = np.full((max_row, max_col), float('nan'))
+    mins = np.full((max_row, max_col), float('nan'))
+    maxs = np.full((max_row, max_col), float('nan'))
 
     for _, row in data.iterrows():
         r, c = row['row'], row['col']
-        avgs[r, c] += row['avg'] / 2.
-        mins[r, c] += row['min'] / 2.
-        maxs[r, c] += row['max'] / 2.
+        for data_array, name in [(avgs, "avg"), (mins, "min"), (maxs, "max")]:
+            if math.isnan(data_array[r, c]):
+                data_array[r, c] = 0
+            data_array[r, c] += row[name]
+            counters[r, c] += 1
+
+    for r in range(max_row):
+        for c in range(max_col):
+            avgs[r, c] /= counters[r, c]
+            mins[r, c] /= counters[r, c]
+            maxs[r, c] /= counters[r, c]
 
     for data_array, name in [(avgs, "avgs"), (mins, "mins"), (maxs, "maxs")]:
         plt.figure(figsize=(16, 10))
