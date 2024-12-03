@@ -55,7 +55,7 @@ def process_file(filename):
 # Plot with and without outliers
 def create_plot(filename, data, title, subtitle, outliers_removed=False):
     plt.subplots_adjust(hspace=0.5)
-    fig, axs = plt.subplots(3, 1, figsize=(8, 6))
+    fig, axs = plt.subplots(3, 1, figsize=(12, 9))
 
     myFmt = mdates.DateFormatter('%H:%M\n%d-%m')
 
@@ -66,7 +66,7 @@ def create_plot(filename, data, title, subtitle, outliers_removed=False):
 
     for i, (metric, color, label) in enumerate(zip(metrics, colors, labels)):
         axs[i].xaxis.set_major_formatter(myFmt)
-        axs[i].plot(data['datetime'], data[metric], label=label, color=color, alpha=0.7)
+        axs[i].plot(data['datetime'], data[metric], label=label, color=color, alpha=0.7, linewidth=0.9)
         # axs[i].set_title(f"{label} Values", fontsize=14)
         axs[i].set_ylabel('Values', fontsize=12)
         axs[i].grid(True, linestyle='--', alpha=0.5)
