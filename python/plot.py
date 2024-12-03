@@ -55,7 +55,7 @@ def process_file(filename):
 # Plot with and without outliers
 def create_plot(filename, data, title, subtitle, outliers_removed=False):
     plt.subplots_adjust(hspace=0.5)
-    fig, axs = plt.subplots(3, 1, figsize=(16, 12))
+    fig, axs = plt.subplots(3, 1, figsize=(8, 6))
 
     myFmt = mdates.DateFormatter('%H:%M\n%d-%m')
 
@@ -119,7 +119,7 @@ def create_histogram(filename):
             maxs[r, c] /= counters[r, c]
 
     for data_array, name in [(avgs, "avgs"), (mins, "mins"), (maxs, "maxs")]:
-        plt.figure(figsize=(16, 10))
+        plt.figure(figsize=(8, 5))
         # plt.title(f"{title}")
         plt.imshow(data_array, cmap='coolwarm')
         plt.colorbar()
