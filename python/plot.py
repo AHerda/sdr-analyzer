@@ -115,7 +115,6 @@ def create_heatmap(filename):
             maxs[r, c] /= counters[r, c]
 
     for data_array, name in [(avgs, "avgs"), (mins, "mins"), (maxs, "maxs")]:
-        print(np.linalg.norm(data_array[~np.isnan(data_array)]))
         data_array /= np.linalg.norm(data_array[~np.isnan(data_array)])
 
         plt.figure(figsize=(8, 5))
