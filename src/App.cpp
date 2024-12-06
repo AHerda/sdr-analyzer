@@ -14,7 +14,7 @@ void App::run() {
         std::cout << "this thread will work for " << duration << " second" << (duration != 1 ? "s\n" : "\n");
         std::this_thread::sleep_for(std::chrono::seconds(duration));
         airSpy.stopRx();
-        std::cout << "Stopped receiving after 1 minute." << std::endl;
+        std::cout << "Stopped receiving after " << duration / 60 << " second" << (duration != 1 ? "s\n" : "\n");
     });
 
     timerThread.join();
