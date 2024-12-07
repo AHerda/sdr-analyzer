@@ -7,15 +7,6 @@
 #include <numeric>
 #include <iostream>
 
-DataProcessor::DataProcessor() {
-}
-
-DataProcessor::~DataProcessor() {
-    // for (const auto& avg : avgs) {
-    //     std::cout << avg << std::endl;
-    // }
-}
-
 void DataProcessor::process(const std::vector<IQSample>& samples) {
     const std::vector<float> magnitude = complexToMagSq(samples);
 

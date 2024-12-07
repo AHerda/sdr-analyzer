@@ -1,5 +1,4 @@
 #include <AirSpy.hpp>
-#include <DataProcessor.hpp>
 #include <utils.hpp>
 
 #include <libairspy/airspy.h>
@@ -205,19 +204,19 @@ void AirSpy::readPartIdSerialNo() {
     }
 }
 
-void AirSpy::startRx(airspy_sample_block_cb_fn callback, void* userData) {
-    int result = airspy_start_rx(device, callback, userData);
+void AirSpy::startRx(airspy_sample_block_cb_fn callback, DataProcessor dataProcessor) {
+    int result = airspy_start_rx(device, callback, &dataProcessor);
     if (result != airspy_error::AIRSPY_SUCCESS) {
         error(result, "Error starting RX");
     }
 }
 
-void AirSpy::startRx(void* userData) {
+void AirSpy::startRx(DataProcessor dataProcessor) {
     startRx(
         [](airspy_transfer_t* transfer) -> int {
             return AirSpy::airpspyCallback(transfer);
         },
-        userData
+        dataProcessor
     );
 }
 
@@ -239,7 +238,6 @@ int AirSpy::airpspyCallback(airspy_transfer_t* transfer) {
 
     if (transfer->dropped_samples) {
         std::string message =
-            //"Samples no. " + std::to_string(AirSpy::counter) +
             "\nDropped samples: " + std::to_string(transfer->dropped_samples);
         transfer->dropped_samples = 0;
         error(airspy_error::AIRSPY_ERROR_OTHER, message, false);
@@ -252,6 +250,5 @@ int AirSpy::airpspyCallback(airspy_transfer_t* transfer) {
     DataProcessor* dataProcessor = (DataProcessor*) transfer->ctx;
     dataProcessor->process(samples);
 
-    // AirSpy::counter++;
     return 0;
 }

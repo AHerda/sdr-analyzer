@@ -1,24 +1,19 @@
 #pragma once
 
-#include <AirSpy.hpp>
-
 #include <libairspy/airspy.h>
 
 #include <complex>
+#include <vector>
 
 using IQSample = std::complex<float>;
 
 class DataProcessor
 {
 public:
-    DataProcessor();
-    ~DataProcessor();
-
     void process(const std::vector<IQSample>& samples);
 
-    std::vector<float> complexToMagSq(const std::vector<IQSample>& samples) const;
     void collectStatistics(const std::vector<float>& data);
-
+    std::vector<float> complexToMagSq(const std::vector<IQSample>& samples) const;
     std::vector<float> applyLowPassFilter(const std::vector<float>& signal);
 
     float getMin() const;

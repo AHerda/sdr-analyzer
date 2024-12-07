@@ -1,5 +1,6 @@
 #pragma once
 
+#include <DataProcessor.hpp>
 #include <units.hpp>
 
 #include <libairspy/airspy.h>
@@ -58,30 +59,13 @@ public:
     /// @brief Starts the reception process
     /// @param callback The callback function
     /// @param userData The user data
-    void startRx(airspy_sample_block_cb_fn callback, void* userData);
-    void startRx(void* userData);
+    void startRx(airspy_sample_block_cb_fn callback, DataProcessor dataProcessor);
+    void startRx(DataProcessor dataProcessor);
     /// @brief Stops the reception process
     void stopRx();
 
     static int airpspyCallback(airspy_transfer_t* transfer);
 
-    void setSi5351cRegister(uint8_t registerNumber, uint8_t value);
-    void readSi5351cRegister(uint8_t registerNumber, uint8_t* value);
-    void setR820tRegister(uint8_t registerNumber, uint8_t value);
-    void readR820tRegister(uint8_t registerNumber, uint8_t* value);
-    void writeConfig(uint8_t pageIndex, uint16_t length, unsigned char* data);
-    void readConfig(uint8_t pageIndex, uint16_t length, unsigned char* data);
-    void writeGpio(airspy_gpio_port_t port, airspy_gpio_pin_t pin, uint8_t value);
-    void readGpio(airspy_gpio_port_t port, airspy_gpio_pin_t pin, uint8_t* value);
-    void writeGpioDir(airspy_gpio_port_t port, airspy_gpio_pin_t pin, uint8_t value);
-    void readGpioDir(airspy_gpio_port_t port, airspy_gpio_pin_t pin, uint8_t* value);
-    void eraseSpiflash();
-    void writeSpiflash(uint32_t address, uint16_t length, unsigned char* data);
-    void readSpiflash(uint32_t address, uint16_t length, unsigned char* data);
-    void readBoardId(uint8_t* value);
-    void readVersionString(char* version, uint8_t length);
-
-    static int counter;
 private:
     airspy_device* device;
     airspy_read_partid_serialno_t serial;
