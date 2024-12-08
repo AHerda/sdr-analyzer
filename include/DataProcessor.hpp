@@ -23,10 +23,10 @@ public:
     void reset();
 
 private:
-    int filterOrder{4};
+    int filterOrder{2};
     bool logs{false};
 
-    std::vector<float> lastData;
+    float lastData;
 
     float max{0.0};
     float min{1.0};
