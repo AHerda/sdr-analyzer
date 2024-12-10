@@ -8,7 +8,7 @@ void App::run() {
     // AirSpy::counter = 0;
     // in minutes
     std::time_t startTime = std::time(0);
-    airSpy.startRx(dataProcessor);
+    airSpy.startRx(&dataProcessor);
 
     std::thread timerThread([&]() {
         std::cout << "this thread will work for " << duration << " second" << (duration != 1 ? "s\n" : "\n");

@@ -204,14 +204,14 @@ void AirSpy::readPartIdSerialNo() {
     }
 }
 
-void AirSpy::startRx(airspy_sample_block_cb_fn callback, DataProcessor dataProcessor) {
-    int result = airspy_start_rx(device, callback, &dataProcessor);
+void AirSpy::startRx(airspy_sample_block_cb_fn callback, void* dataProcessor) {
+    int result = airspy_start_rx(device, callback, dataProcessor);
     if (result != airspy_error::AIRSPY_SUCCESS) {
         error(result, "Error starting RX");
     }
 }
 
-void AirSpy::startRx(DataProcessor dataProcessor) {
+void AirSpy::startRx(void* dataProcessor) {
     startRx(
         [](airspy_transfer_t* transfer) -> int {
             return AirSpy::airpspyCallback(transfer);

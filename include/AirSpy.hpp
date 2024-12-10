@@ -6,6 +6,7 @@
 #include <libairspy/airspy.h>
 
 #include <cstdint>
+#include <memory>
 #include <vector>
 
 class AirSpy
@@ -58,9 +59,9 @@ public:
 
     /// @brief Starts the reception process
     /// @param callback The callback function
-    /// @param userData The user data
-    void startRx(airspy_sample_block_cb_fn callback, DataProcessor dataProcessor);
-    void startRx(DataProcessor dataProcessor);
+    /// @param dataProcessor The dataProcessor passed from App object
+    void startRx(airspy_sample_block_cb_fn callback, void* dataProcessor);
+    void startRx(void* dataProcessor);
     /// @brief Stops the reception process
     void stopRx();
 
