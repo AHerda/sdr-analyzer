@@ -68,6 +68,7 @@ std::vector<float> DataProcessor::getAvgs() const {
 }
 
 void DataProcessor::reset() {
-    std::swap(min, max);
+    max = 0.0;
+    min = 1.0;
     avgs.clear();
 }

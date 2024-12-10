@@ -2,12 +2,23 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from datetime import datetime
 import math
 import re
 import os
+import sys
 
-data_path = "data/"
+if len(sys.argv) < 3:
+    data_path = "data"
+    plots_path = "plots"
+else:
+    data_path = sys.argv[1]
+    plots_path = sys.argv[2]
+
+if data_path[-1] == '/':
+    data_path = data_path[:-1]
+
+if plots_path[-1] == '/':
+    plots_path = plots_path[:-1]
 
 def main():
     files = []
@@ -22,9 +33,9 @@ def main():
         if re.search(".csv$", file):
             print(f"processing: {file}")
             if re.search("heatmap", file):
-                create_histogram(data_path + file)
+                create_histogram(data_path + "/" + file)
             else:
-                process_file(data_path + file)
+                process_file(data_path + "/" + file)
 
 # Process one file, creating two plots
 def process_file(filename):
@@ -83,7 +94,7 @@ def create_plot(filename, data, title, subtitle, outliers_removed=False):
     suffix = '_no_outliers' if outliers_removed else ''
 
     fig.tight_layout(pad=2.0)
-    plt.savefig(f'plots2/{filename}{suffix}.png')
+    plt.savefig(f'{plots_path}/{filename}{suffix}.png')
     plt.close()
 
 def create_histogram(filename):
@@ -123,7 +134,7 @@ def create_histogram(filename):
         # plt.title(f"{title}")
         plt.imshow(data_array, cmap='coolwarm')
         plt.colorbar()
-        plt.savefig(f'plots2/{filename[5:-4]}_{name}.png')
+        plt.savefig(f'{plots_path}/{filename[5:-4]}_{name}.png')
 
 # Removing outliers for the second plot
 def remove_outliers(df, column):

@@ -73,13 +73,13 @@ void error(int errCode, const std::string& message, bool fatal) {
 }
 
 void drawAsciiGraph(const std::vector<float>& data) {
-    const int width = 100;//data.size(); // Width of the ASCII graph
+    const int width = data.size(); // Width of the ASCII graph
     const int graphHeight = 200; // Height of the ASCII graph
     const float maxVal = *std::max_element(data.begin(), data.end());
     const float minVal = *std::min_element(data.begin(), data.end());
     const double scale = (double) (graphHeight / (maxVal - minVal));
 
-    for (size_t x = 0; x < data.size(); ++x) {
+    for (size_t x = 0; x < width; ++x) {
         for (int y = graphHeight; y >= 0; --y) {
             float value = data[x];
             int graphY = static_cast<int>((value - minVal) * scale);
@@ -91,8 +91,6 @@ void drawAsciiGraph(const std::vector<float>& data) {
         }
         std::printf("\n");
     }
-
-    // std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 }
 
 void logStatsOfVec(
