@@ -26,7 +26,7 @@ private:
     /// @example livingroom-2x3
     std::string description{""};
     /// @brief File name of the output
-    std::string fileName{"../data/output.csv"};
+    std::string fileName{"output.csv"};
 
     /// @brief Frequency in Hz
     /// @note The frequency must be between 24MHz and 1.75GHz.

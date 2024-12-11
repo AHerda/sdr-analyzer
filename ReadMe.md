@@ -57,7 +57,7 @@ Flaga | Alias | Opis
 Analiza z wartościami domyślnymi.
 * Pasmo: 433,92 MHz,
 * Opis: "",
-* Plik wynikowy: ../data/output.csv
+* Plik wynikowy: output.csv
 * Czas trwania jednego testu: 60s,
 * Ilość powtórzeń: 1
 * Nadpisywanie pliku

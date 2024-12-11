@@ -1,5 +1,4 @@
-#ifndef UTILS_HPP
-#define UTILS_HPP
+#pragma once
 
 #include <ctime>
 #include <fstream>
@@ -22,5 +21,3 @@ void logStatsOfVec(
     const std::vector<float>& data,
     std::optional<Info> dataInfo = std::nullopt
 );
-
-#endif // UTILS_HPP
