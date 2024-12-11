@@ -5,8 +5,6 @@
 #include <thread>
 
 void App::run() {
-    // AirSpy::counter = 0;
-    // in minutes
     std::time_t startTime = std::time(0);
     airSpy.startRx(&dataProcessor);
 
@@ -25,8 +23,6 @@ void App::run() {
 }
 
 void App::logData(std::time_t startTime) {
-    // auto min = dataProcessor.getMin();
-    // auto max = dataProcessor.getMax();
     std::cout << "RESULTS OF WHOLE APP\n";
     auto avgs = dataProcessor.getAvgs();
 

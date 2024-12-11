@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     }
 
     for (int i = 0; i < repeat; i++) {
-        std::cout << "Test iteration: " << i + 1 << "/" << repeat << " (" << (float) i / (float) repeat * 100. << "%)" << std::endl; 
+        std::cout << "Test iteration: " << i + 1 << "/" << repeat << " (" << (float) i / (float) repeat * 100. << "%)" << std::endl;
         app.run();
         app.reset();
         if (i + 1 != repeat)

@@ -38,11 +38,6 @@ void error(int errCode, const std::string& message, bool fatal) {
     case airspy_error::AIRSPY_ERROR_NO_MEM:
         std::cerr << "\tNo memory" << std::endl;
         break;
-
-    // case airspy_error::AIRSPY_ERROR_UNSUPPORTED:
-    //     std::cerr << "\tUnsupported" << std::endl;
-    //     break;
-
     case airspy_error::AIRSPY_ERROR_LIBUSB:
         std::cerr << "\tLibUSB" << std::endl;
         break;
@@ -73,8 +68,8 @@ void error(int errCode, const std::string& message, bool fatal) {
 }
 
 void drawAsciiGraph(const std::vector<float>& data) {
-    const int width = data.size(); // Width of the ASCII graph
-    const int graphHeight = 200; // Height of the ASCII graph
+    const int width = data.size();
+    const int graphHeight = 200;
     const float maxVal = *std::max_element(data.begin(), data.end());
     const float minVal = *std::min_element(data.begin(), data.end());
     const double scale = (double) (graphHeight / (maxVal - minVal));
